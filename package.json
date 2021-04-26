@@ -10,7 +10,7 @@
         "Other"
     ],
     "activationEvents": [
-        "workspaceContains:*"
+        "onView:showCountry"
     ],
     "main": "./dist/extension.js",
     "contributes": {
@@ -18,16 +18,64 @@
             {
                 "command": "test.helloWorld",
                 "title": "Hello World"
+            },
+            {
+                "command": "test.refreshsideBar",
+                "title": "Refresh SiderBar",
+                "icon": {
+                    "light": "/src/svg/refresh.svg",
+                    "dark": "/src/svg/refresh-light.svg"
+                }
+            },
+            {
+                "command": "test.showError",
+                "title": "showError",
+                "icon": {
+                    "light": "/src/svg/error.svg",
+                    "dark": "/src/svg/error-light.svg"
+                }
             }
         ],
         "views": {
             "explorer": [
                 {
                     "id": "showCountry",
-                    "name": "中国行政区划"
+                    "name": "中国行政区划",
+                    "icon": "/src/svg/县城-light.svg"
                 }
             ]
-        }
+        },
+        "menus": {
+            "view/title": [
+                {
+                    "command": "test.refreshsideBar",
+                    "when": "view == showCountry",
+                    "group": "navigation"
+                },
+                {
+                    "command": "test.helloWorld",
+                    "when": "view == showCountry"
+                }
+            ],
+            "view/item/context": [
+                {
+                    "command": "test.helloWorld",
+                    "when": "view == showCountry"
+                },
+                {
+                    "command": "test.showError",
+                    "when": "view == showCountry",
+                    "group": "inline"
+                }
+            ]
+        },
+        "keybindings": [
+            {
+                "command": "test.helloWorld",
+                "key": "ctrl+s ctrl+p",
+                "mac": "cmd+s cmd+p"
+            }
+        ]
     },
     "scripts": {
         "vscode:prepublish": "npm run package",

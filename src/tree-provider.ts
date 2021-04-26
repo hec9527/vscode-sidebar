@@ -39,6 +39,7 @@ export class CountryProvider implements vscode.TreeDataProvider<Country> {
         }
         return Promise.resolve([]);
     }
+
     parseData(data: IData[]) {
         return data.map(item => {
             return new Country(
@@ -80,6 +81,17 @@ export class CountryProvider implements vscode.TreeDataProvider<Country> {
 
         return location;
     }
+
+    private _onDidChangeTreeData: vscode.EventEmitter<Country | undefined | null | void> = new vscode.EventEmitter<
+        Country | undefined | null | void
+    >();
+
+    readonly onDidChangeTreeData: vscode.Event<Country | undefined | null | void> = this._onDidChangeTreeData.event;
+
+    public refresh(): void {
+        this._onDidChangeTreeData.fire();
+        console.log('refres data');
+    }
 }
 
 class Country extends vscode.TreeItem {
@@ -98,7 +110,14 @@ class Country extends vscode.TreeItem {
             6: '县城',
         }[this.description.length];
 
-        this.setIconPath(place || '乡村');
+        // this.command = {
+        //     title: '展示',
+        //     command: 'test.showTreeItem',
+        //     arguments: [this.tooltip, this.description],
+        //     tooltip: 'show',
+        // };
+
+        // this.setIconPath(place || '乡村');
     }
 
     setIconPath(name: string) {
