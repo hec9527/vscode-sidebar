@@ -1,6 +1,6 @@
 {
-    "name": "test",
-    "displayName": "test",
+    "name": "siderbar",
+    "displayName": "siderbar",
     "description": "",
     "version": "0.0.1",
     "engines": {
@@ -13,6 +13,7 @@
         "onView:showCountry"
     ],
     "main": "./dist/extension.js",
+    "publisher": "hec9527",
     "contributes": {
         "commands": [
             {
@@ -23,16 +24,16 @@
                 "command": "test.refreshsideBar",
                 "title": "Refresh SiderBar",
                 "icon": {
-                    "light": "/src/svg/refresh.svg",
-                    "dark": "/src/svg/refresh-light.svg"
+                    "light": "/public/svg/refresh.svg",
+                    "dark": "/public/svg/refresh-light.svg"
                 }
             },
             {
                 "command": "test.showError",
                 "title": "showError",
                 "icon": {
-                    "light": "/src/svg/error.svg",
-                    "dark": "/src/svg/error-light.svg"
+                    "light": "/public/svg/error.svg",
+                    "dark": "/public/svg/error-light.svg"
                 }
             }
         ],
@@ -41,7 +42,7 @@
                 {
                     "id": "showCountry",
                     "name": "中国行政区划",
-                    "icon": "/src/svg/县城-light.svg"
+                    "icon": "/public/svg/县城-light.svg"
                 }
             ]
         },
@@ -77,7 +78,12 @@
             }
         ]
     },
+    "repository": {
+        "type": "git",
+        "url": "http://gitlab.100credit.cn/hec/vscode-extension-sideBar"
+    },
     "scripts": {
+        "build": "vsce package -o siderbar.vsix",
         "vscode:prepublish": "npm run package",
         "compile": "webpack --config ./build/node-extension.webpack.config.js",
         "watch": "webpack --watch --config ./build/node-extension.webpack.config.js",

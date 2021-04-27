@@ -16,12 +16,13 @@ type IData = {
 export class CountryProvider implements vscode.TreeDataProvider<Country> {
     private data: IData[] = [];
 
-    constructor(private filePath: string) {
-        console.log('%c filepath:', 'color:pink', filePath);
-        if (!pathExists(filePath)) {
+    constructor(private context: vscode.ExtensionContext) {
+        const dataPath = path.join(context.extensionPath, '/public/data/省市县镇.json');
+        console.log('%c dataPath:', 'color:pink', dataPath);
+        if (!pathExists(dataPath)) {
             throw new Error('file not exists');
         } else {
-            this.data = JSON.parse(fs.readFileSync(this.filePath, 'utf-8'));
+            this.data = JSON.parse(fs.readFileSync(dataPath, 'utf-8'));
             console.log('省市县行政区划，侧边栏已启动');
         }
     }
@@ -43,6 +44,7 @@ export class CountryProvider implements vscode.TreeDataProvider<Country> {
     parseData(data: IData[]) {
         return data.map(item => {
             return new Country(
+                this.context,
                 item.name,
                 item.code,
                 this.getFullLocation(item),
@@ -96,6 +98,7 @@ export class CountryProvider implements vscode.TreeDataProvider<Country> {
 
 class Country extends vscode.TreeItem {
     constructor(
+        private context: vscode.ExtensionContext,
         public readonly label: string,
         public description: string, // code
         public tooltip: string,
@@ -122,8 +125,8 @@ class Country extends vscode.TreeItem {
 
     setIconPath(name: string) {
         this.iconPath = {
-            light: path.join(__dirname, `../src/svg/${name}.svg`),
-            dark: path.join(__dirname, `../src/svg/${name}-light.svg`),
+            light: path.join(this.context.extensionPath, `/public/svg/${name}.svg`),
+            dark: path.join(this.context.extensionPath, `/public/svg/${name}-light.svg`),
         };
     }
 }
