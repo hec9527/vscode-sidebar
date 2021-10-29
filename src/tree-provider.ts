@@ -113,14 +113,14 @@ class Country extends vscode.TreeItem {
             6: '县城',
         }[this.description.length];
 
-        // this.command = {
-        //     title: '展示',
-        //     command: 'test.showTreeItem',
-        //     arguments: [this.tooltip, this.description],
-        //     tooltip: 'show',
-        // };
+        this.command = {
+            title: '展示',
+            command: 'test.showTreeItem',
+            arguments: [this.tooltip, this.description],
+            tooltip: 'show',
+        };
 
-        // this.setIconPath(place || '乡村');
+        this.setIconPath(place || '乡村');
     }
 
     setIconPath(name: string) {
